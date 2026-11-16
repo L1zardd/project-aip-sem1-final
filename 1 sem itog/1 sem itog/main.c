@@ -55,7 +55,9 @@ void try(int *n){
 
 
 int main(void) {
+    scanf("%19s %19s %19s", word1, word2, word3);
     
+    reverse_str(word1); reverse_str(word2); reverse_str(word3);
     
     bool seen[256] = {false};
     
