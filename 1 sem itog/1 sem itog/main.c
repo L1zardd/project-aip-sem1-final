@@ -7,10 +7,8 @@
 
 char word1[MAX_LEN], word2[MAX_LEN], word3[MAX_LEN];
 int len1, len2, len3, max_len;
-
 char letters[17];
 int uniq_letters = 0;
-
 int val[256];
 bool used[16];
 bool not_zero[256];
@@ -36,11 +34,9 @@ bool is_valid(void) {
         int d3 = val[(unsigned char)word3[i]];
 
         int sum = d1 + d2 + carry;
-
         if (sum % BASE != d3) {
             return false;
         }
-
         carry = sum / BASE;
     }
 
@@ -56,7 +52,7 @@ void print_solution(void) {
     printf("\n");
 }
 
-bool try(int n) {
+bool solve(int n) {
     if (n == uniq_letters) {
         if (is_valid()) {
             print_solution();
@@ -66,7 +62,6 @@ bool try(int n) {
     }
 
     unsigned char ch = (unsigned char)letters[n];
-
     for (int d = 0; d < BASE; d++) {
         if (used[d]) continue;
         if (d == 0 && not_zero[ch]) continue;
@@ -74,7 +69,7 @@ bool try(int n) {
         val[ch] = d;
         used[d] = true;
 
-        if (try(n + 1)) {
+        if (solve(n + 1)) {
             return true;
         }
 
@@ -107,7 +102,6 @@ int main(void) {
     if (len3 > 1) not_zero[(unsigned char)word3[len3 - 1]] = true;
 
     max_len = len3;
-
     bool seen[256] = {false};
 
     for (int col = 0; col < max_len; col++) {
@@ -129,9 +123,32 @@ int main(void) {
         }
     }
 
-    if (!try(0)) {
+    if (!solve(0)) {
         printf("Решений нет\n");
     }
 
     return 0;
 }
+
+/*
+A B C
+A A B
+A A A
+A B CD
+AA BB CDC
+ABC DEF GHIJ
+AB C AB
+AB CD EF
+AB BA CC
+ABC D ABE
+A BCD BEF
+a b c
+A a B
+TWO TWO FOUR
+SEND MORE MONEY
+ABC D EF
+A B CDEF
+AA AA AA
+AA BB CCC
+ABCDEFGH IJKLMNOP QRSTUVW
+*/
