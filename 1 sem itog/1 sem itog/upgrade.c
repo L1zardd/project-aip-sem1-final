@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
+#include <time.h>
+
 
 #define MAX_LEN 20
 #define BASE 16
@@ -29,12 +31,6 @@ void print_solution(void) {
     printf("\n");
 }
 
-/*
- * Поразрядный поиск с возвратом:
- * col   - текущий столбец (от 0 - младший разряд, до len3 - 1)
- * row   - позиция в столбце: 0 -> word1, 1 -> word2, 2 -> вычисление word3
- * carry - перенос из предыдущего столбца (0 или 1)
- */
 bool solve(int col, int row, int carry) {
     if (col == len3) {
         if (carry == 0) {
@@ -93,8 +89,7 @@ bool solve(int col, int row, int carry) {
         }
         return false;
     }
-
-    /* row == 2: обе цифры слагаемых известны, вычисляем цифру суммы по формуле */
+    
     int d1 = (col < len1) ? val[(unsigned char)word1[col]] : 0;
     int d2 = (col < len2) ? val[(unsigned char)word2[col]] : 0;
     int sum = d1 + d2 + carry;
@@ -126,9 +121,13 @@ bool solve(int col, int row, int carry) {
 }
 
 int main(void) {
+    struct timespec start, end;
+    
+    
     if (scanf("%19s %19s %19s", word1, word2, word3) != 3) {
         return 0;
     }
+    clock_gettime(CLOCK_MONOTONIC, &start);
 
     reverse_str(word1);
     reverse_str(word2);
@@ -144,7 +143,6 @@ int main(void) {
         return 0;
     }
 
-    /* Подсчет уникальных символов и инициализация массива значений */
     bool seen[256] = {false};
     int uniq_letters = 0;
     char *words[3] = {word1, word2, word3};
@@ -176,5 +174,10 @@ int main(void) {
         printf("Решений нет\n");
     }
 
+    clock_gettime(CLOCK_MONOTONIC, &end);
+
+    double time_taken = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1e9;
+
+    printf("Время выполнения: %f секунд\n", time_taken);
     return 0;
 }

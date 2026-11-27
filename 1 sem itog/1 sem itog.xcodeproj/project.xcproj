@@ -11,8 +11,21 @@
     ],
   },
   "files": [
-    { "kind": "folder", "path": "1 sem itog", "target-membership": [ "1 sem itog" ] },
     {
+      "kind": "folder",
+      "path": "1 sem itog",
+      "target-membership": [
+        "1 sem itog",
+      ],
+      "membership-exceptions": [
+        {
+          "target": "1 sem itog",
+          "exclusions": [
+            "main.c",
+          ],
+        },
+      ],
+    }, {
       "kind": "group",
       "name": "Products",
       "children": [
