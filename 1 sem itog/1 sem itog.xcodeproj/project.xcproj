@@ -21,7 +21,7 @@
         {
           "target": "1 sem itog",
           "exclusions": [
-            "main.c",
+            "upgrade.c",
           ],
         },
       ],

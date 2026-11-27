@@ -80,10 +80,12 @@ bool solve(int n) {
 }
 
 int main(void) {
+    struct timespec start, end;
+    
     if (scanf("%19s %19s %19s", word1, word2, word3) != 3) {
         return 0;
     }
-
+    clock_gettime(CLOCK_MONOTONIC, &start);
     reverse_str(word1);
     reverse_str(word2);
     reverse_str(word3);
@@ -126,7 +128,12 @@ int main(void) {
     if (!solve(0)) {
         printf("Решений нет\n");
     }
+    clock_gettime(CLOCK_MONOTONIC, &end);
 
+    double time_taken = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1e9;
+
+    printf("Время выполнения: %f секунд\n", time_taken);
+    
     return 0;
 }
 
